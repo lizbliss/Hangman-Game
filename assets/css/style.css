@@ -1,0 +1,47 @@
+body {
+    background-color: #CED8F6;
+    font-family: 'Barrio', 'Times New Roman', sans-serif;
+    line-height: 150%;
+    color: #6E6E6E;
+    height: 100%;
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Barrio', sans-serif;
+    font-size: 5em;
+    color: #6E6E6E;
+    text-align: center;
+    padding: 50px;
+}
+
+p {
+    font-size: 1.33em;
+    text-align: center;
+}
+
+.wrapper {
+    text-align: center;
+    padding: 2px;
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+
+.container,
+.container2,
+.container3,
+.container4 {
+    margin: 50px;
+}
+
+#img1 {
+    width: 333px;
+    height: 224px;
+    align-self: center;
+}
+
+.footer,
+.push {
+    height: 50px;
+    text-align: center;
+}
