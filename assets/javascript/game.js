@@ -1,43 +1,108 @@
-//psuedo code steps: 
+//Global Variables
+//Arrays and Variables for holiding data
+var wordOptions = ["alien", "android", "beam", "blaster", "cyberspace", "forcefield"];
+var selectedWord = "";
+var lettersInWord = [];
 
-//1.    Pick a random word.
-//2.    Take the player’s guess.
-//3.    Quit the game if the player wants to.
-//4.    Check that the player’s guess is a valid letter.
-//5.    Keep track of letters the player has guessed.
-//6.    Show the player their progress.
-//7.    Finish when the player has guessed the word.
+var numBlanks = 0;
+var blanksAndSuccesses = [];
+var wrongLetters = [];
 
-var words = ['alien', 'android', 'beam', 'blaster', 'cyberspace', 'forcefield'];
+//Game Counters
+var winCount = 0;
+var lossCount = 0;
+var numGuesses = 9;
+var guessesLeft;
 
-var word = words[Math.floor(Math.random() * words.length)];
+//Functions 
+function startGame() {
+    selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
+    lettersInWord = selectedWord.split("");
+    console.log("letters in the word = ", lettersInWord);
+    numBlanks = lettersInWord.length;
+    console.log("this is numblanks = ", numBlanks);
 
-var answerArray = [];
-for (var i = 0; i < word.length; i++) {
-    answerArray[i] = "_";
+    //Reset
+    guessesLeft = 9;
+    wrongLetters = [];
+    blanksAndSuccesses = [];
+
+    //populate blanksAndSuccess with right number of blanks
+    for (var i = 0; i < numBlanks; i++) {
+        blanksAndSuccesses.push("-");
+    }
+
+    //Change HTML to reflect round confitions
+
+    document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join("  ");
+    document.getElementById("numGuesses").innerHTML = guessesLeft;
+    document.getElementById("winCounter").innerHTML = winCount;
+    document.getElementById("lossCounter").innerHTML = lossCount;
 
 }
+//This is where we check for a matching letter
+function checkLetters(letter) {
+    //check if letter exists in code at all
+    var isLetterInWord = false;
+    for (var i = 0; i < numBlanks; i++) {
+        if (selectedWord[i] == letter) {
+            isLetterInWord = true;
+        }
+    }
+    console.log("letter good", isLetterInWord);
+    //check where in the workd letter exists, and populate our blanksandsuccess array
+    if (isLetterInWord) {
 
-var remainingLetters = word.length;
-while (remainingLetters > 0) {
-    console.log(answerArray.join(""));
-
-    var guess = prompt("Guess a letter, or click Cancel to stop playing.");
-    if (guess === null) {
-        break;
-
-    } else if (guess.length !== 1) {
-        console.log("Please enter a single letter.");
-
-    } else {
-        for (var j = 0; j < word.length; j++) {
-            if (word[j] === guess) {
-                answerArray[j] = guess;
-                remainingLetters--;
+        for (var i = 0; i < numBlanks; i++) {
+            if (selectedWord[i] == letter) {
+                console.log("you guessed it = ", selectedWord[i]);
+                blanksAndSuccesses[i] = letter;
             }
         }
     }
+    //Letter wasn't found
+    else {
+        wrongLetters.push(letter);
+        guessesLeft--;
+    }
+}
+
+function roundComplete() {
+    console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left" + numGuesses);
+    console.log("Should be 9 = ", guessesLeft);
+    document.getElementById("numGuesses").innerHTML = guessesLeft;
+    document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join(" ");
+    document.getElementById("wrongGuesses").innerHTML = wrongLetters.join(" ");
+    document.getElementById("message").innerHTML = "";
+
+
+
+    if (lettersInWord.toString() == blanksAndSuccesses.toString()) {
+        winCount++;
+        document.getElementById("message").innerHTML = "You Won! Play Again?";
+
+        //updates the win counter in html 
+        document.getElementById("winCounter").innerHTML = winCount;
+
+        startGame();
+
+    } else if (guessesLeft == 0) {
+        lossCount++;
+        document.getElementById("message").innerHTML = "You lost!";
+
+        //updates the loss counter in html
+        document.getElementById("lossCounter").innerHTML = lossCount;
+
+        startGame();
+    }
+}
+
+
+startGame();
+//Register keyclick
+document.onkeyup = function(event) {
+    var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+    checkLetters(letterGuessed);
+    roundComplete();
 
 }
-console.log(answerArray.join(""));
-console.log("Good job! The answer was " + word);

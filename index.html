@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="assets/javascript/game.js"></script>
 </head>
 
 <body>
@@ -17,24 +16,29 @@
         <img src="assets/images/scientist.jpg" alt="scientist" id="img1">
         <br>
         <br>
+        <p id="message"></p>
         <p> Press any key to get started!</p>
     </div>
     <br>
     <br>
     <div class="container">
-        <h3>Wins:</h3>
+        <h3>Word to Guess: <span id="wordToGuess"></span></h3>
     </div>
     <div class="container2">
-        <h3>Current Word:</h3>
+        <h3> Wrong Guesses: <span id ="wrongGuesses"></span></h3>
     </div>
     <div class="container3">
-        <h3>Number of Guesses Remaining:</h3>
+        <h3>Number of Guesses Remaining: <span id="numGuesses"></span></h3>
     </div>
     <div class="container4">
-        <h3>Letters Already Guessed:</h3>
+        <h3>Win Counter: <span id="winCounter"></span></h3>
+    </div>
+    <div class="container5">
+        <h3>Loss Counter: <span id="lossCounter"></span></h3>
     </div>
     <div class="push"></div>
     <footer class="footer">&copy; Copyright 2017 Liz Blissett</footer>
+    <script src="assets/javascript/game.js"></script>
 </body>
 
 </html>
